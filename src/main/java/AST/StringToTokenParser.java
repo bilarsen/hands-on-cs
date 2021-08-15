@@ -5,12 +5,12 @@ import java.util.List;
 
 public class StringToTokenParser {
 
-    private final List<ASTNode> tokens = new ArrayList<>();
+    private final List<ASTToken> tokens = new ArrayList<>();
 
-    public List<ASTNode> parse(String expression) {
+    public List<ASTToken> parse(String expression) {
         String[] exprMembers = expression.split("");
         for (String member : exprMembers) {
-            tokens.add(ASTNode.fromString(member));
+            tokens.add(ASTToken.fromString(member));
         }
         return tokens;
     }

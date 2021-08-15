@@ -2,7 +2,8 @@ package AST;
 
 public enum TokenType {
 
-    PARENTHESIS("Скобка"),
+    LEFT_PARENTHESIS("Открывающая скобка"),
+    RIGHT_PARENTHESIS("Закрывающая скобка"),
     OPERATION("Операция"),
     NUMBER("Число");
 
