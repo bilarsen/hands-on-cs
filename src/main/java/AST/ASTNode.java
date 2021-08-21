@@ -10,18 +10,30 @@ public class ASTNode {
 
     private ASTNode parent;
 
+    private String expression;
+
+    private Integer result;
+
+    private NodeType nodeType;
+
     public ASTNode() {
-        value = null;
-        leftChild = null;
-        rightChild = null;
-        parent = null;
+        this.value = null;
+        this.leftChild = null;
+        this.rightChild = null;
+        this.parent = null;
+        this.expression = null;
+        this.result = null;
+        this.nodeType = null;
     }
 
-    public ASTNode(String value) {
+    public ASTNode(String value, NodeType nodeType) {
         this.value = value;
-        leftChild = null;
-        rightChild = null;
-        parent = null;
+        this.nodeType = nodeType;
+        this.leftChild = null;
+        this.rightChild = null;
+        this.parent = null;
+        this.expression = null;
+        this.result = null;
     }
 
     public ASTNode createLeftChild() {
@@ -64,5 +76,29 @@ public class ASTNode {
 
     public void setParent(ASTNode parent) {
         this.parent = parent;
+    }
+
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+    }
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
+    public NodeType getNodeType() {
+        return nodeType;
+    }
+
+    public void setNodeType(NodeType nodeType) {
+        this.nodeType = nodeType;
     }
 }
