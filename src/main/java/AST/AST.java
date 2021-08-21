@@ -76,8 +76,9 @@ public class AST {
                 case "+":
                     result = leftChildValue + rightChildValue;
             }
-            node.setResult(result);
+            node.setValue(String.valueOf(result));
             node.setExpression(String.format("(%d %s %d)", leftChildValue, node.getValue(), rightChildValue));
+            node.setNodeType(NodeType.VALUE);
             node.setLeftChild(null);
             node.setRightChild(null);
             return interpret(node.getParent());
