@@ -74,7 +74,7 @@ public class Blockchain {
                 .orElse(null);
     }
 
-    public boolean isChainCorrect() {
+    public boolean isChainBroken() {
         return blocks.stream()
                 .anyMatch(block -> !block.getHash().equals(hashBlock(block)));
     }
