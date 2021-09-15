@@ -16,27 +16,35 @@ public class Neuron {
         this.synapses = new int[n][m];
     }
 
-    public int activationFunction(int[][] fileData) {
+    public void learn(List<File> files, int cycleCount, int boudnary) {
+        this.boundary = boudnary;
+        int prevMatches = 0;
+        int currentMatches = 0;
+        for (int cycle = 0; cycle < cycleCount; cycle++) {
+            for (File file : files) {
+                boolean correctFile = file.getName().contains("positive");
+                int[][] scannedInput = parseScannedInput(file);
+                int result = activationFunction(scannedInput);
+                if (!correctFile && result == 1) lowerWeights(scannedInput);
+                else if (correctFile && result == 0) increaseWeights(scannedInput);
+                else currentMatches++;
+            }
+            if (currentMatches == files.size()) break;
+            else if (currentMatches < prevMatches) boudnary--;
+            else if (currentMatches > prevMatches) boudnary++;
+            prevMatches = currentMatches;
+            currentMatches = 0;
+        }
+    }
+
+    private int activationFunction(int[][] fileData) {
         int sum = 0;
-        this.boundary = 35;
         for (int i = 0; i < synapses.length; i++) {
             for (int j = 0; j < synapses[i].length; j++) {
                 sum += fileData[i][j] * synapses[i][j];
             }
         }
         return sum < boundary ? 0 : 1;
-    }
-
-    public void learn(List<File> files, int cycleCount) {
-        for (int cycle = 0; cycle < cycleCount; cycle++) {
-            for (File file : files) {
-                boolean correctFile = file.getName().contains("positive");
-                int[][] scannedInput = parseScannedInput(file);
-                int result = activationFunction(scannedInput);
-                if (correctFile && result == 1) lowerWeights(scannedInput);
-                else if (!correctFile && file.getName().startsWith("a")) increaseWeights(scannedInput);
-            }
-        }
     }
 
     private int[][] parseScannedInput(File file) {
@@ -55,8 +63,18 @@ public class Neuron {
     }
 
     private void increaseWeights(int[][] fileData) {
+        for (int i = 0; i < synapses.length; i++) {
+            for (int j = 0; j < synapses[i].length; j++) {
+                synapses[i][j] += fileData[i][j];
+            }
+        }
     }
 
     private void lowerWeights(int[][] fileData) {
+        for (int i = 0; i < synapses.length; i++) {
+            for (int j = 0; j < synapses[i].length; j++) {
+                synapses[i][j] -= fileData[i][j];
+            }
+        }
     }
 }
